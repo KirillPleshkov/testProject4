@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'styles/success.css'%}" type="text/css">
+
+    <div class="success-message">
+        <h1>Оплата прошла успешно!</h1>
+        <p>Спасибо за вашу покупку. Ваш заказ будет обработан в ближайшее время.</p>
+        <a href="/">Вернуться на главную страницу</a>
+    </div>
+{% endblock %}

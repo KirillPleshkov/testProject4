@@ -1,0 +1,30 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #e0f7fa;
+    color: #00796b;
+    text-align: center;
+    padding: 50px;
+}
+h1 {
+    font-size: 36px;
+}
+p {
+    font-size: 18px;
+}
+.success-message {
+    background-color: #b2dfdb;
+    padding: 20px;
+    border-radius: 8px;
+    display: inline-block;
+}
+a {
+    text-decoration: none;
+    color: white;
+    background-color: #00796b;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+a:hover {
+    background-color: #004d40;
+}

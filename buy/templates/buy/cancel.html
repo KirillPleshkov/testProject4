@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'styles/cancel.css'%}" type="text/css">
+
+    <div class="error-message">
+        <h1>Оплата не прошла!</h1>
+        <p>К сожалению, произошла ошибка при обработке вашего платежа. Пожалуйста, попробуйте еще раз.</p>
+        <a href="/">Вернуться на главную страницу</a>
+    </div>
+{% endblock %}

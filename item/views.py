@@ -17,6 +17,6 @@ class ItemView(TemplateView):
 
         item = get_object_or_404(Item, id=id)
         context["title"] = item.name
-        context["buy"] = item
+        context["item"] = item
         context["STRIPE_PUBLIC_KEY"] = settings.STRIPE_PUBLIC_KEY
         return context
