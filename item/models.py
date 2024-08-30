@@ -2,9 +2,11 @@ from django.db import models
 
 
 class Item(models.Model):
+    """Модель товара"""
+
     name = models.CharField(max_length=255, verbose_name="название")
     description = models.TextField(verbose_name="описание")
-    price = models.IntegerField(verbose_name="цена")  # цена в копейках
+    price = models.IntegerField(verbose_name="цена(в копейках)")  # цена в копейках
 
     class Meta:
         verbose_name = "товар"

@@ -6,6 +6,6 @@ urlpatterns = [
     path(
         "<int:item_id>/",
         CreateCheckoutSessionView.as_view(),
-        name="create-checkout-session",
+        name="create_checkout_session",
     )
 ]
