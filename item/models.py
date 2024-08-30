@@ -4,7 +4,7 @@ from django.db import models
 class Item(models.Model):
     """Модель товара"""
 
-    name = models.CharField(max_length=255, verbose_name="название")
+    name = models.CharField(max_length=255, unique=True, verbose_name="название")
     description = models.TextField(verbose_name="описание")
     price = models.DecimalField(max_digits=20, decimal_places=2, verbose_name="цена")
 
