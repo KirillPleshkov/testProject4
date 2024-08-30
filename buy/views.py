@@ -20,7 +20,7 @@ class CreateCheckoutSessionView(View):
                 {
                     "price_data": {
                         "currency": "rub",
-                        "unit_amount": int(item.price * 100),
+                        "unit_amount": item.price,
                         "product_data": {"name": item.name},
                     },
                     "quantity": 1,
