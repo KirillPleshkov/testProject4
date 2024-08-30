@@ -13,11 +13,11 @@ class Item(models.Model):
         verbose_name_plural = "товары"
 
     @property
-    def normal_price(self):
+    def normal_price(self) -> str:
         return f"{self.price:.2f}"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"Item({self.name}, {self.description}, {self.price})"

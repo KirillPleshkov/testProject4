@@ -3,12 +3,31 @@
 
 {% block content %}
     <link rel="stylesheet" href="{% static 'styles/item.css'%}" type="text/css">
-    <script src="{% static 'scripts/item.js' %}"></script>
+    <script src="https://js.stripe.com/v3/"></script>
 
     <div class="container">
         <h1>Название товара: {{ item.name }}</h1>
         <p>Описание: {{ item.description }}</p>
         <p class="price">Цена: {{ item.price }} руб.</p>
-        <button onclick="buyItem({{ item.id }})">Купить</button>
+        <button type="button" id="checkout-button">Купить</button>
     </div>
+
+    <script>
+        const stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+        const checkoutButton = document.getElementById("checkout-button");
+
+        checkoutButton.addEventListener("click", () => {
+            fetch("{% url 'create_checkout_session' item.id %}")
+                .then(result => result.json())
+                .then(session => stripe.redirectToCheckout({ sessionId: session.id }))
+                .then(result => {
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
+                })
+                .catch(error => {
+                  console.error("Error:", error);
+                });
+        });
+    </script>
 {% endblock %}
