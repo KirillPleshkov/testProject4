@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # Приложения
     "item",
+    "buy",
 ]
 
 MIDDLEWARE = [
