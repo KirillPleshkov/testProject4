@@ -1,3 +1,5 @@
+from typing import Any
+
 import stripe
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
@@ -38,6 +40,16 @@ class CreateCheckoutSessionView(View):
 class SuccessView(TemplateView):
     template_name = "buy/success.html"
 
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(id=id, **kwargs)
+        context["title"] = "Удачная покупка"
+        return context
+
 
 class CancelView(TemplateView):
     template_name = "buy/cancel.html"
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(id=id, **kwargs)
+        context["title"] = "Неудачная покупка"
+        return context
