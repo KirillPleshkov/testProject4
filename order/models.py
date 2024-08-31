@@ -1,6 +1,10 @@
-from django.core.validators import MinValueValidator
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
+from buy.services.stripe import (
+    stripe_save_or_update_discount,
+    stripe_save_or_update_tax_rate,
+)
 from item.models import Item
 
 
@@ -9,6 +13,23 @@ class Order(models.Model):
 
     name = models.CharField(max_length=255, verbose_name="название")
     items = models.ManyToManyField(Item, through="OrderItemM2M")
+
+    discount = models.ForeignKey(
+        "Discount",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="order",
+        verbose_name="скидка",
+    )
+    tax = models.ForeignKey(
+        "Tax",
+        on_delete=models.SET_NULL,
+        blank=True,
+        null=True,
+        related_name="order",
+        verbose_name="налог",
+    )
 
     class Meta:
         verbose_name = "заказ"
@@ -22,6 +43,8 @@ class Order(models.Model):
 
 
 class OrderItemM2M(models.Model):
+    """Модель для связи Item и Order для хранения товаров заказа и их количества"""
+
     order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="заказ")
     item = models.ForeignKey(Item, on_delete=models.CASCADE, verbose_name="товар")
     count = models.PositiveIntegerField(
@@ -34,5 +57,57 @@ class OrderItemM2M(models.Model):
         verbose_name_plural = "товары заказа"
         unique_together = ("order", "item")
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"Заказ: {self.order}, товар: {self.item}"
+
+
+class Discount(models.Model):
+    """Модель скидки для заказа"""
+
+    name = models.CharField(max_length=255, verbose_name="название")
+    percentage = models.PositiveIntegerField(
+        verbose_name="процент скидки",
+        validators=[MinValueValidator(1), MaxValueValidator(100)],
+    )
+    stripe_id = models.CharField(
+        max_length=255, blank=True, unique=True, null=True, verbose_name="stripe_id"
+    )
+
+    def save(self, *args, **kwargs):
+        self.stripe_id = stripe_save_or_update_discount(
+            self.stripe_id, self.name, self.percentage
+        )
+        super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "скидка"
+        verbose_name_plural = "скидки"
+
+    def __str__(self) -> str:
+        return self.name
+
+
+class Tax(models.Model):
+    """Модель налога для заказа"""
+
+    name = models.CharField(max_length=255, verbose_name="название")
+    percentage = models.PositiveIntegerField(
+        verbose_name="процент налога",
+        validators=[MinValueValidator(1), MaxValueValidator(100)],
+    )
+    stripe_id = models.CharField(
+        max_length=255, blank=True, null=True, unique=True, verbose_name="stripe_id"
+    )
+
+    def save(self, *args, **kwargs):
+        self.stripe_id = stripe_save_or_update_tax_rate(
+            self.stripe_id, self.name, self.percentage
+        )
+        super().save(*args, **kwargs)
+
+    class Meta:
+        verbose_name = "налог"
+        verbose_name_plural = "налоги"
+
+    def __str__(self) -> str:
+        return self.name

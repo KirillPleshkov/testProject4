@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from order.models import Order, OrderItemM2M
+from order.models import Order, OrderItemM2M, Discount, Tax
 
 
 class ItemsInline(admin.TabularInline):
@@ -13,3 +13,13 @@ class ItemsInline(admin.TabularInline):
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
     inlines = (ItemsInline,)
+
+
+@admin.register(Discount)
+class DiscountAdmin(admin.ModelAdmin):
+    readonly_fields = ("stripe_id",)
+
+
+@admin.register(Tax)
+class TaxAdmin(admin.ModelAdmin):
+    readonly_fields = ("stripe_id",)

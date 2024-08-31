@@ -17,11 +17,17 @@
                 </div>
             {% endfor %}
         </div>
+
+        <div class="summary">
+            <p class="discount">Скидка: {{ order.discount.name }} {{ order.discount.percentage }} %</p>
+            <p class="tax">Налог: {{ order.tax.name }} {{ order.tax.percentage }} %</p>
+        </div>
+
         <button type="button" id="checkout-button">Купить все</button>
     </div>
 
     <script>
-    const stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+        const stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
         const checkoutButton = document.getElementById("checkout-button");
 
         checkoutButton.addEventListener("click", () => {
@@ -34,7 +40,7 @@
                     }
                 })
                 .catch(error => {
-                  console.error("Error:", error);
+                    console.error("Error:", error);
                 });
         });
     </script>

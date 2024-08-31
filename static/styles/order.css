@@ -35,11 +35,33 @@ h1 {
     font-size: 18px;
     color: #666;
 }
-
 .quantity-label {
     font-size: 18px;
     color: #333;
     margin-right: 10px;
+}
+.summary {
+    margin-top: 20px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+}
+.summary p {
+    font-size: 18px;
+    color: #333;
+}
+.discount {
+    color: #2ecc71; /* Зеленый для скидки */
+}
+.tax {
+    color: #e67e22; /* Оранжевый для налога */
+}
+.total {
+    font-weight: bold;
+    font-size: 20px;
+    color: #e74c3c; /* Красный для итоговой суммы */
 }
 button {
     background-color: #3498db;
