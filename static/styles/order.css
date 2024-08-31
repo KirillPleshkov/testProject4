@@ -1,0 +1,57 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+.price {
+    font-size: 22px;
+    color: #e74c3c;
+    font-weight: bold;
+}
+.container {
+    max-width: 600px;
+    margin: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    font-size: 28px;
+    color: #333;
+}
+.product {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+.product h2 {
+    font-size: 24px;
+    color: #333;
+}
+.product p {
+    font-size: 18px;
+    color: #666;
+}
+
+.quantity-label {
+    font-size: 18px;
+    color: #333;
+    margin-right: 10px;
+}
+button {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-right: 5px;
+}
+button:hover {
+    background-color: #2980b9;
+}

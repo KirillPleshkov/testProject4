@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <link rel="stylesheet" href="{% static 'styles/order.css' %}" type="text/css">
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <div class="container">
+        <h1>Заказ: {{ title }}</h1>
+        <div id="products">
+            {% for order_item_m2m in order.orderitemm2m_set.all %}
+                <div class="product">
+                    <h2>{{ order_item_m2m.item.name }}</h2>
+                    <p>Описание: {{ order_item_m2m.item.description }}</p>
+                    <p class="price">Цена: {{ order_item_m2m.item.price }} руб.</p>
+                    <span class="quantity-label">Количество: <span id="quantity">{{ order_item_m2m.count }}</span></span>
+                </div>
+            {% endfor %}
+        </div>
+        <button type="button" id="checkout-button">Купить все</button>
+    </div>
+
+    <script>
+    const stripe = Stripe("{{ STRIPE_PUBLIC_KEY }}");
+        const checkoutButton = document.getElementById("checkout-button");
+
+        checkoutButton.addEventListener("click", () => {
+            fetch("{% url 'buy-order' order.id %}")
+                .then(result => result.json())
+                .then(session => stripe.redirectToCheckout({ sessionId: session.id }))
+                .then(result => {
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
+                })
+                .catch(error => {
+                  console.error("Error:", error);
+                });
+        });
+    </script>
+{% endblock %}

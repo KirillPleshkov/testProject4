@@ -8,7 +8,7 @@ from item.models import Item
 
 
 class ItemView(TemplateView):
-    """View ля отображения информации о товаре"""
+    """View для отображения информации о товаре"""
 
     template_name = "item/item.html"
 

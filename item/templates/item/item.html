@@ -17,7 +17,7 @@
         const checkoutButton = document.getElementById("checkout-button");
 
         checkoutButton.addEventListener("click", () => {
-            fetch("{% url 'create_checkout_session' item.id %}")
+            fetch("{% url 'buy-item' item.id %}")
                 .then(result => result.json())
                 .then(session => stripe.redirectToCheckout({ sessionId: session.id }))
                 .then(result => {
