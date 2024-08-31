@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     # Приложения
     "item",
     "buy",
+    "order",
 ]
 
 MIDDLEWARE = [
