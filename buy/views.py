@@ -43,6 +43,16 @@ class BuyOrderView(View):
     def get(self, request, *args, order_id: int, **kwargs) -> JsonResponse:
         order = get_object_or_404(Order.objects.prefetch_related("items"), id=order_id)
 
+        tax_rate = stripe.TaxRate.create(  # Here
+            display_name="Налог на что-то", percentage=10, inclusive=False
+        )
+
+        coupon = stripe.Coupon.create(
+            duration="repeating",
+            duration_in_months=3,
+            percent_off=25.5,
+        )
+
         items_to_stripe = [
             {
                 "price_data": {
@@ -51,6 +61,7 @@ class BuyOrderView(View):
                     "product_data": {"name": m2m_item.item.name},
                 },
                 "quantity": m2m_item.count,
+                "tax_rates": [tax_rate["id"]],
             }
             for m2m_item in order.orderitemm2m_set.all()
         ]
@@ -62,6 +73,7 @@ class BuyOrderView(View):
             mode="payment",
             success_url=domain + "/buy/success/",
             cancel_url=domain + "/buy/cancel/",
+            discounts=[{"coupon": coupon["id"]}],
         )
         return JsonResponse({"id": checkout_session.id})
 
