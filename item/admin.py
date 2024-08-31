@@ -7,4 +7,4 @@ from item.models import Item
 class ItemAdmin(admin.ModelAdmin):
     """Запись в админ-панели про товары"""
 
-    ...
+    search_fields = ("name",)
