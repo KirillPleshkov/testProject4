@@ -74,14 +74,19 @@
 Шаблон ENV файла с комментариями:
 
 POSTGRES_HOST=postgres (Для docker оставить таким)
+
 POSTGRES_DB=testProject4DB (название таблицы в БД)
+
 POSTGRES_USER=postgres (name пользователя postgres)
+
 POSTGRES_PASSWORD=rootroot (password пользователя postgres)
+
 POSTGRES_PORT=5432 (порт postgres)
 
 SECRET_KEY=<SECRET_KEY> (сгенерируйте секретный ключ)
 
 STRIPE_PUBLIC_KEY=pk_test_... (получили после регистрации Stripe аккаунта)
+
 STRIPE_SECRET_KEY=sk_test_5... (получили после регистрации Stripe аккаунта)
 
 DOMAIN=http://127.0.0.1:8000 (домен где расположен backend, скорее всего оставить таким)
