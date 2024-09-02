@@ -2,8 +2,8 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 from buy.services.stripe import (
-    stripe_save_or_update_discount,
-    stripe_save_or_update_tax_rate,
+    save_or_update_stripe_discount,
+    save_or_update_stripe_tax_rate,
 )
 from item.models import Item
 
@@ -74,7 +74,7 @@ class Discount(models.Model):
     )
 
     def save(self, *args, **kwargs):
-        self.stripe_id = stripe_save_or_update_discount(
+        self.stripe_id = save_or_update_stripe_discount(
             self.stripe_id, self.name, self.percentage
         )
         super().save(*args, **kwargs)
@@ -100,7 +100,7 @@ class Tax(models.Model):
     )
 
     def save(self, *args, **kwargs):
-        self.stripe_id = stripe_save_or_update_tax_rate(
+        self.stripe_id = save_or_update_stripe_tax_rate(
             self.stripe_id, self.name, self.percentage
         )
         super().save(*args, **kwargs)

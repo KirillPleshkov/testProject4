@@ -7,4 +7,5 @@ class OrderConfig(AppConfig):
     verbose_name = "заказ"
 
     def ready(self):
+        """Подключение сигналов"""
         from . import signals
